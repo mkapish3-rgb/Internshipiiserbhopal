@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Pooja ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS RESET & GENERAL STYLING */
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0c0c0c;
+            color: white;
+            overflow: hidden; /* No standard scrolling, strictly timeline based */
+            width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* MASTER CONTAINER SLIDING TIMELINE */
+        .master-timeline {
+            display: flex;
+            width: 600vw; /* 6 scenes total including start screen */
+            height: 100vh;
+            transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1); /* Smooth video style slide */
+            transform: translateX(0);
+        }
+
+        /* SCENE STYLING */
+        .scene {
+            width: 100vw; height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px; text-align: center;
+            position: relative;
+        }
+
+        /* GENERAL TEXT ELEMENTS */
+        h1, h2 { font-weight: 600; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        p { font-weight: 300; font-size: 1.15em; line-height: 1.6; max-width: 600px;}
+
+        /* --- Scene 0: Start Screen --- */
+        #start-btn {
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: white; border: none; padding: 15px 40px;
+            font-size: 1.2em; border-radius: 30px; cursor: pointer;
+            font-weight: 600; font-family: 'Poppins', sans-serif;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 30px;
+        }
+        #start-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6); }
+
+        /* --- Scene 1: Instagram (Code Animations) --- */
+        .chat-view { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
+        .bubble { padding: 12px 18px; border-radius: 20px; font-size: 0.95em; max-width: 85%; opacity: 0; transform: translateY(15px); transition: opacity 1s, transform 1s; }
+        .sender { background-color: #262626; align-self: flex-start; border-bottom-left-radius: 5px; }
+        .receiver { background-color: #0095f6; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .wave-anim { display: inline-block; width: 60px; height: 14px; background: repeating-linear-gradient(90deg, #fff, #fff 2px, transparent 2px, transparent 4px); animation: VNWave 1.2s infinite alternate; }
+        @keyframes VNWave { 0% { transform: scaleY(0.8); } 100% { transform: scaleY(1.3); } }
+        .status-popup { position: absolute; padding: 15px 20px; border-radius: 12px; font-weight: 500; font-size: 0.9em; opacity: 0; transform: scale(0.7); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .deactivate { background-color: #ff4757; color: white; bottom: 25%; left: 8%; }
+        .reactivate { background-color: #2ed573; color: white; top: 25%; right: 8%; box-shadow: 0 0 20px rgba(46, 213, 115, 0.5); font-weight: 600;}
+
+        /* --- Scene 2: Roses (Color & Pulse Animation) --- */
+        #scene-2 { background: radial-gradient(circle, #2a2a2a 0%, #0c0c0c 100%); }
+        .rose-box { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px;}
+        .rose-ico { font-size: 80px; transition: color 2s ease; margin-bottom: -15px;}
+        .heart-ico { font-size: 60px; transition: color 2s ease; animation: HeartPulseAnim 1.5s infinite; }
+        @keyframes HeartPulseAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .rose-text-area { min-height: 40px; transition: color 2s ease; font-weight: 300;}
+
+        /* --- Scene 3: Map / Distance (Pure SVG & Glow) --- */
+        .map-display { position: relative; width: 320px; height: 320px; margin-top: 20px;}
+        .glow-point { position: absolute; width: 12px; height: 12px; border-radius: 50%; background-color: #ff4757; box-shadow: 0 0 15px #ff4757; opacity: 0; transition: opacity 1.2s;}
+        .p-rj { top: 20%; left: 50%; transform: translateX(-50%); }
+        .p-hyd { bottom: 10%; right: 12%; }
+        .p-bpl { top: 50%; left: 18%; }
+        .map-label { position: absolute; font-size: 0.8em; color: #ccc; top: 15px; left: -10px; }
+        
+        .map-line {
+            position: absolute; height: 2px; background-color: #ff4757;
+            transform-origin: left center; opacity: 0; transition: width 2.5s ease, opacity 1s;
+            box-shadow: 0 0 10px rgba(255, 71, 87, 0.7);
+        }
+        /* Rotations defined in JS logic symbolically */
+
+        /* --- Scene 4: Riverside Climax (PURE ABSTRACT & COLOR ANIMATION - NO PICS) --- */
+        /* Bhai character movements symbolic visual effects pure code se honge */
+        #scene-4 { background-color: #ff9e4f; overflow: hidden; position: relative; transition: background-color 3s ease; } /* Initial Golden Hour Sunset */
+        
+        /* Symbolic wave layers for riverside visualization */
+        .river-wave { position: absolute; bottom: 0; width: 100%; height: 60%; background: rgba(255,255,255,0.1); border-radius: 50% 50% 0 0; transform-origin: center bottom; opacity: 0; transition: opacity 2s, transform 4s; }
+        
+        /* Symbolic visual effect layers for closeness animation */
+        .approach-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.5); opacity: 0; transition: all 3s ease-in-out; filter: blur(2px); }
+        .approach-left { width: 60px; height: 60px; left: 15%; top: 40%; }
+        .approach-right { width: 55px; height: 55px; right: 15%; top: 42%; }
+        
+        .promise-text-holder { font-size: 1.15em; line-height: 1.8; font-weight: 300; min-height: 110px; max-width: 650px; margin-top: 30px; position: relative; z-index: 10;}
+        .promise-fade-line { opacity: 0; transform: translateY(15px); transition: opacity 1s, transform 1s; }
+
+        /* --- Scene 5: Grand Birthday & Vanvaas Text --- */
+        #scene-birthday { background: radial-gradient(circle, #2a2a2a 0%, #0c0c0c 100%); position: relative; overflow: hidden;}
+        .bday-title-anim { font-family: 'Dancing Script', cursive; font-size: 4.2em; color: #f1c40f; text-shadow: 0 0 25px #f1c40f; opacity: 0; transform: scale(0.9); transition: opacity 2s, transform 2s; }
+        .v-line-anim { font-size: 1.1em; line-height: 1.7; color: #e0e0e0; font-style: italic; max-width: 750px; margin-bottom: 18px; opacity: 0; transform: translateY(15px); transition: opacity 1.5s, transform 1.5s; }
+        .final-wada-anim { font-size: 1.2em; color: #ff6b6b; font-weight: 500; margin-top: 25px; opacity: 0; transform: translateY(15px); transition: opacity 1.5s, transform 1.5s; }
+
+        /* Sparkle effect animations pure code */
+        .sparkle-effect { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: SparkleFall 5s ease-in infinite; }
+        @keyframes SparkleFall {
+            0% { transform: translateY(-100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="tera_fitoor.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="master-timeline" id="masterTimeline">
+
+        <section class="scene" id="scene-0">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3em; color: #ff6b81;">A Story For Pooja ✨</h2>
+            <p style="margin-top: 10px; color: #ccc; font-weight: 300;">Ready ho jao, or volume badha lena full experience k liye... ❤️</p>
+            <button id="start-btn">Tap to Start 🎧</button>
+        </section>
+
+        <section class="scene" id="scene-1">
+            <h2 id="s1-text1" style="font-size: 1.5em; opacity: 0; transform: translateY(15px); transition: all 1s;">Cute Beginning (VN)...</h2>
+            <div class="chat-view">
+                <div class="bubble sender" id="b1">Insta pr mile, thodi bhut baat shuru hui...</div>
+                <div class="bubble receiver" id="b2" style="display: flex; align-items: center; gap: 10px;">
+                    🎤 <div class="wave-anim"></div> VN
+                </div>
+                <div class="bubble sender" id="b3">Mene bhi exchange kiya!</div>
+            </div>
+            <div class="status-popup deactivate" id="pop1">Account Deactivated! 😔</div>
+            <div class="status-popup reactivate" id="pop2">Just came back to tell you, Exams ke liye deactivate kar rhi hu! 😍</div>
+        </section>
+
+        <section class="scene" id="scene-2">
+            <div class="rose-box">
+                <div class="rose-ico" id="r-ico">🌹</div>
+                <div class="heart-ico" id="h-ico">🤍</div>
+            </div>
+            <p class="rose-text-area" id="r-text"></p>
+        </section>
+
+        <section class="scene" id="scene-3">
+            <h2 id="s3-text1" style="opacity: 0; transform: translateY(15px); transition: all 1s;">Roots toh pure Rajasthan m thin...</h2>
+            <div class="map-display">
+                <div class="glow-point p-rj" id="d-rj"><span class="map-label">Rajasthan</span></div>
+                <div class="glow-point p-hyd" id="d-hyd"><span class="map-label">Hyderabad</span></div>
+                <div class="glow-point p-bpl" id="d-bpl"><span class="map-label">Bhopal</span></div>
+                <div class="map-line" id="l1" style="top: 20%; left: 50%; transform: rotate(45deg);"></div>
+                <div class="map-line" id="l2" style="top: 20%; left: 50%; transform: rotate(130deg);"></div>
+                <div class="map-line" id="l3" style="top: 20%; left: 50%; transform: rotate(-30deg);"></div>
+                <div id="m-heart" style="position: absolute; color: #ff4757; font-size: 30px; opacity: 0; left: 45%; top: 40%; filter: drop-shadow(0 0 10px #ff4757);">❤️</div>
+            </div>
+            <p id="s3-text2" style="margin-top: 30px; opacity: 0; transform: translateY(15px); transition: all 1s; color: #ccc;">Distance matters not... Dil jude hain humare.</p>
+        </section>
+
+        <section class="scene" id="scene-4">
+            <div class="river-wave" style="animation-delay: 0s;"></div>
+            <div class="river-wave" style="animation-delay: 1.2s; bottom: -5%;"></div>
+            <div class="river-wave" style="animation-delay: 2.4s; bottom: -10%;"></div>
+            
+            <div class="approach-circle approach-left" id="sym_l"></div>
+            <div class="approach-circle approach-right" id="sym_r"></div>
+
+            <div class="promise-text-holder" id="promText"></div>
+        </section>
+
+        <section class="scene" id="scene-birthday">
+            <div id="sparkle_holder"></div>
+            <h1 class="bday-title-anim" id="b1-title">Happy Birthday, Pooja! ✨</h1>
+            <p class="v-line-anim" id="v-text1">"Pooja, tumhe life mein jo karna hai karo, apne sapne poore karo. Main kahin nahi ja raha, hamesha tumhare paas hu."</p>
+            <p class="v-line-anim" id="v-text2">"Tumhara Jaipur jaakar 1.5 saal SSC ki taiyaari karna... main is doori ko humara 'Vanvaas' maan kar khushi se bitaunga. Ye tapasya humare future k liye zaruri h."</p>
+            
+            <p class="final-wada-anim" id="final-wada">"Main sirf tumhara hu, or chahta hu tum hamesha meri hi raho." ❤️</p>
+        </section>
+
+    </div>
+
+    <script>
+        // --- MASTER CONFIG & ANIMATION TIMELINE ---
+        // Bhai pure movie jesa timeline chalane k liye asynchronous delays use honge slow pacing k sath.
+        const masterTimeline = document.getElementById('masterTimeline');
+        const bgMusic = document.getElementById('bgMusic');
+        let currentSceneIndex = 0;
+
+        // Smooth switch between scenes by sliding 100vw
+        function slideToScene(index) {
+            currentSceneIndex = index;
+            masterTimeline.style.transform = `translateX(-${index * 100}vw)`;
+            // Wait for slide animation to end before starting scene-specific animations
+            setTimeout(() => {
+                playSceneLogic(index);
+            }, 1200); // Wait for slide transition time
+        }
+
+        // --- SPECIFIC SCENE ANIMATION GENERATOR ---
+        // Bhai visual elements process honge slow pacing k sath yahan.
+        function playSceneLogic(index) {
+            switch(index) {
+                case 1: // Insta Scene Logic
+                    document.getElementById('s1-text1').style.opacity = '1'; document.getElementById('s1-text1').style.transform = 'translateY(0)';
+                    setTimeout(() => document.getElementById('b1').style.opacity = '1', 2500);
+                    setTimeout(() => document.getElementById('b2').style.opacity = '1', 5000);
+                    setTimeout(() => document.getElementById('b3').style.opacity = '1', 7500);
+                    
+                    // Cute Deactivate popup logic
+                    setTimeout(() => {
+                        const pop1 = document.getElementById('pop1');
+                        pop1.style.opacity = '1'; pop1.style.transform = 'scale(1)';
+                    }, 10500);
+
+                    // Reached twist moment
+                    setTimeout(() => {
+                        const pop2 = document.getElementById('pop2');
+                        pop2.style.opacity = '1'; pop2.style.transform = 'scale(1)';
+                    }, 13500);
+
+                    // Proceed after twist hold moment
+                    setTimeout(() => slideToScene(2), 19000); // End of Scene 1
+                    break;
+
+                case 2: // Roses Scene Logic
+                    animateRosesSequence();
+                    break;
+
+                case 3: // Map Scene Logic
+                    document.getElementById('s3-text1').style.opacity = '1'; document.getElementById('s3-text1').style.transform = 'translateY(0)';
+                    setTimeout(() => document.getElementById('d-rj').style.opacity = '1', 2000);
+                    setTimeout(() => {
+                        // Symbolic line drawing logic via width expansion pure animation
+                        document.getElementById('l1').style.opacity = '1'; document.getElementById('l1').style.width = '120px'; // symbolically defined
+                        document.getElementById('l2').style.opacity = '1'; document.getElementById('l2').style.width = '110px';
+                        document.getElementById('l3').style.opacity = '1'; document.getElementById('l3').style.width = '90px';
+                    }, 4000);
+                    setTimeout(() => document.getElementById('d-hyd').style.opacity = '1', 6500);
+                    setTimeout(() => document.getElementById('d-bpl').style.opacity = '1', 6500);
+                    setTimeout(() => document.getElementById('m-heart').style.opacity = '1', 8000);
+                    setTimeout(() => document.getElementById('s3-text2').style.opacity = '1', 9500);
+                    
+                    // Proced to next logic end Scene 3
+                    setTimeout(() => slideToScene(4), 14500);
+                    break;
+
+                case 4: // Climax Scene Logic (PURE ABSTRACT VISUALS - characters move symbolically)
+                    animateAbstractClimaxLogic();
+                    break;
+
+                case 5: // Birthday Scene Logic
+                    runBirthdayFinaleLogic();
+                    break;
+            }
+        }
+
+        // --- SCENE 2: ROSE COLOR TRANS ANIM LOGIC ---
+        function animateRosesSequence() {
+            const stepsData = [
+                { color: '#ffffff', text: "Shuruaat dosti se hui... 🤍" }, // White Symbolic
+                { color: '#f1c40f', text: "Became the best of friends... 💛" }, // Yellow Symbolic
+                { color: '#ff9ff3', text: "Fell in love (Connection)... 🩷" }, // Pink Symbolic connection
+                { color: '#ff4757', text: "And now, my favorite person. ❤️" } // Red symbolic favorite person
+            ];
+            const rIco = document.getElementById('r-ico');
+            const hIco = document.getElementById('h-ico');
+            const rText = document.getElementById('r-text');
+            let StepNum = 0;
+            
+            const roseInteval = setInterval(() => {
+                if(StepNum < stepsData.length){
+                    // Update Colors pure animation transition
+                    rIco.style.color = stepsData[StepNum].color;
+                    hIco.style.color = stepsData[StepNum].color;
+                    rText.style.color = stepsData[StepNum].color;
+                    rText.innerText = stepsData[StepNum].text;
+                    rText.style.opacity = '0';
+                    setTimeout(() => rText.style.opacity = '1', 200);
+                    StepNum++;
+                } else {
+                    clearInterval(roseInteval);
+                    // Procede Scene logic end 2
+                    setTimeout(() => slideToScene(3), 3500);
+                }
+            }, 3800); // Give ample time for pure flow visualization or reading
+        }
+
+        // --- SCENE 4: PURE ABSTRACT VISUAL CLIMAX LOGIC ---
+        // Bhai yahan hum character movement ko symbolic pure animation visual effects se mimic karenge characters without pics.
+        function animateAbstractClimaxLogic() {
+            const scene4 = document.getElementById('scene-4');
+            const waves = document.querySelectorAll('.river-wave');
+            const symL = document.getElementById('sym_l');
+            const symR = document.getElementById('sym_r');
+            const promText = document.getElementById('promText');
+
+            const textData = [
+                "Mujhe pta h hum apna time le rahe h ek dusre ko samajhne k liye...",
+                "Aur humein koi jaldi bhi nahi h...",
+                "Par main chahta hu tum apne dil se ye darr nikaal do ki main kahin jaunga.",
+                "Main hamesha tumhare paas hu, tum bas thoda pyaar se mujhe time do...",
+                "Kyunki last m, shaadi toh mujhe tumhi se karni h."
+            ];
+
+            // 1. Initial State Symbolic River Scene logic
+            setTimeout(() => waves.forEach(w => w.style.opacity = '1'), 1000);
+            setTimeout(() => waves.forEach(w => w.style.transform = 'scaleY(1.3) translateY(-10%)'), 3000); // strong slow wavy background logic symbolic
+
+            // 2. Symbolic Approach Animation logic (approaching characters/sitting)
+            setTimeout(() => {
+                symL.style.opacity = '1'; symL.style.left = '35%'; // Abstract Approach movement pure code
+                symR.style.opacity = '1'; symR.style.right = '35%'; // Characters closer symbolic logic
+                promText.innerHTML = `<p class="promise-fade-line show-text">${textData[0]}</p>`;
+            }, 6000);
+
+            // 3. Symbolic "Head on Shoulder" animation logic
+            setTimeout(() => {
+                // Characters/Visuals merged symbolically leaning
+                symR.style.transform = 'translate(-15px, -15px) scale(0.9)'; // abstract leaning movement
+                promText.innerHTML = `<p class="promise-fade-line show-text">${textData[1]}</p>`;
+            }, 11000);
+
+            // 4. Symbolic HUG logic (Warmth Pulse pure animation)
+            setTimeout(() => {
+                // Background warming up, pulses of warmth pure animation visually
+                scene4.style.backgroundColor = '#feb47b'; // Colors warming symbolic pure color logic
+                symL.style.background = 'rgba(255,255,255,0.8)';
+        
